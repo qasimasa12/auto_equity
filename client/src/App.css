@@ -1,0 +1,150 @@
+/* *{
+  font-family: 'Montserrat';
+  font-style: normal;
+} */
+
+.body {
+  overflow-x: hidden;
+  background-color: #F1F1F1;
+
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background:#a5a9ad;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #6B7B8C;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.pointer.active.desc:after {
+  content: "▲";
+}
+
+.pointer.active.asc:after {
+  content: "▼";
+}
+
+table thead {
+  background: #E6E6E6;
+  /* backdrop-filter: blur(2px); */
+  /* border-radius: 15px !important; */
+  /* border: none !important; */
+}
+
+table th:first-child {
+  border-radius: 15px 0 0 15px;
+}
+
+table th:last-child {
+  border-radius: 0 15px 15px 0;
+}
+
+table thead tr th {
+  white-space: nowrap;
+  width: 100px;
+
+}
+
+table tbody tr td {
+  width: 100px;
+}
+
+/* .table thead tr th,
+.table tbody tr td,
+
+.table tbody tr{
+  border: none !important;
+}
+.table tbody tr td{
+  border: none !important;
+} */
+/* .table thead tr th{
+  width: 300px !important;
+}.table tbody tr td{
+  width: 300px !important;
+} */
+
+table {
+  border: hidden !important;
+
+}
+
+table thead tr th {
+  border: hidden !important;
+  color: #464F60;
+}
+
+table tbody tr td {
+  border: hidden !important;
+}
+
+.small_font {
+  font-size: 16px;
+}
+
+.tx_bold {
+  font-weight: bold;
+}
+
+.potion_over_flow {
+  overflow: scroll;
+}
+
+.block_over_y {
+  overflow-x: hidden !important;
+}
+
+/* .App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */

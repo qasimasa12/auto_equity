@@ -1,0 +1,51 @@
+.modal-container12 {
+  position: fixed !important;
+  z-index: 999 !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.modal12 {
+  border-radius: 5px !important;
+  padding: 2rem !important;
+  background-color: white !important;
+  width: 25em !important;
+}
+
+.modal12 .btn12 {
+  display: block !important;
+  margin: auto !important;
+}
+
+.form-group12 {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-bottom: 1rem !important;
+}
+
+.form-group12 input,
+.form-group12 textarea,
+.form-group12 select {
+  border: 1px solid black !important;
+  border-radius: 0.3rem !important;
+  padding: 0.3rem !important;
+  font-size: 1rem !important;
+}
+
+.form-group12 label {
+  margin-bottom: 0.2rem !important;
+}
+
+.error {
+  background-color: #f8d7da !important;
+  color: #df4759 !important;
+  padding: 0.5rem !important;
+  border-radius: 0.3rem !important;
+  margin-bottom: 1rem !important;
+}

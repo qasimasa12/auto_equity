@@ -1,0 +1,95 @@
+.hid {
+    margin: 0%;
+    overflow-x: hidden;
+}
+
+.full_hight {
+    height: 100vh;
+}
+
+.login_img {
+    width: auto;
+    height: 100vh;
+}
+
+.box_coklor {
+    background: #6B7B8C;
+}
+
+.right_loginbox {}
+
+.poti_set {
+    position: absolute;
+    z-index: 300;
+    margin-right: 44%;
+    margin-top: 4%;
+    width: 1.5%;
+}
+
+.login_logo {
+    width: 40%;
+}
+
+.textOnInput {
+    position: relative;
+}
+
+.textOnInput label {
+    position: absolute;
+    top: -15px;
+    left: 23px;
+    padding: 2px;
+    z-index: 1;
+
+}
+
+.textOnInput label:after {
+    content: " ";
+    background-color: #fff;
+
+    width: 100%;
+    height: 13px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+label {
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: .5rem;
+}
+
+.form-control {
+    box-shadow: none !important;
+    border: 2px solid rgb(120, 120, 120);
+}
+
+.boxBtn_login {
+    width: 304px;
+    height: 40px;
+    background: #6B7B8C;
+    border-radius: 8px;
+}
+
+.font_white {
+    color: white;
+    font-weight: bold;
+}
+
+.loginBTNlogo {
+    width: 10%;
+}
+.loginBTNlogo2 {
+    width: 11%;
+}
+
+
+
+@media screen and (max-width: 767px) {
+    .right_loginbox{
+        display: none !important;
+    }
+}

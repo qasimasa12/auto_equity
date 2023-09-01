@@ -1,0 +1,358 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    padding: 0;
+}
+
+.text_font {
+    font-size: 17px;
+    color: black;
+}
+
+.ac {
+    font-weight: 500;
+    color: rgb(99, 99, 99);
+
+}
+
+.bg_nav_left {
+    height: 100vh;
+    background: #F7F7F7;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    position: fixed;
+}
+
+.bg_hed {
+    background-color: #6B7B8C;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    height: 60px;
+    display: flex;
+    align-items: center;
+    margin-right: -30px !important;
+}
+
+.hednameRow {
+    /* position: absolute; */
+    background-color: #6B7B8C;
+    height: 60px;
+    /* border-bottom: 2px solid #FFFFFF; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 300 !important;
+}
+
+.img_manu {
+    width: 30px;
+    margin-left: 36.66667%;
+    pointer-events: none;
+    display: none;
+}
+
+.endSET {
+    display: flex;
+    justify-content: end;
+}
+
+.profileIMG {
+    width: 30px;
+    border-radius: 100%;
+}
+
+.centeraligtn {
+    display: flex;
+    justify-content: center;
+}
+
+.diIMG1 {
+    display: none;
+    width: 90%;
+    margin-top: 5px;
+}
+
+.diIMG2 {
+    display: block;
+    width: 90%;
+    margin-top: 5px;
+}
+
+.arrorIMG {
+    width: 15px !important;
+}
+
+.leftarrorIMG1 {
+    display: none;
+    width: 50%;
+    margin-left: 105%;
+}
+
+.leftarrorIMG2 {
+    display: block;
+    width: 50%;
+    margin-left: 105%;
+
+}
+
+.leftbox {
+    width: 16%;
+}
+
+.hiddnbox {
+    display: none;
+}
+
+.hiddnbox2 {
+    display: none;
+}
+
+.cPoin {
+    cursor: pointer;
+}
+
+
+
+.hover:hover {
+    background-color: #6B7B8C;
+    ;
+    color: #FFFFFFFF !important;
+    /* font-weight: bold; */
+    /* margin-top: 5%; */
+    height: 10%;
+}
+
+.hover:hover .text_font {
+    color: #FFFFFFFF !important;
+    font: bold;
+}
+
+.hover:hover .diIMG1 {
+    display: block;
+}
+
+.hover:hover .diIMG2 {
+    display: none;
+}
+
+.hover:hover .leftarrorIMG1 {
+    display: block;
+}
+
+.hover:hover .leftarrorIMG2 {
+    display: none;
+}
+
+
+.rowler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #dadada;
+}
+
+.poti_fix_new {
+    position: fixed;
+    z-index: 300 !important;
+}
+
+.bb {
+    margin-top: 10px !important;
+}
+
+.logo_new {
+    width: 100%;
+}
+
+.setnit {
+    width: 30%;
+}
+.logo_new2{
+    display: none;
+    position: absolute;
+    visibility: hidden;
+    z-index: -10;
+}
+
+
+
+@media screen and (max-width: 1200px) {
+    .diIMG1 {
+        width: 200%;
+        display: none;
+    }
+
+    .diIMG2 {
+        display: block;
+        width: 200%;
+    }
+
+
+    .arrorIMG {
+        width: 250%;
+    }
+
+    .leftarrorIMG1 {
+        display: none;
+        width: 150%;
+        margin-left: 105%;
+    }
+
+    .leftarrorIMG2 {
+        display: block;
+        width: 150%;
+        margin-left: 105%;
+    }
+
+
+}
+
+@media screen and (max-width: 900px) {
+    .dorpsizephone{
+        width: 50%;
+        margin-right: -20% !important;
+    }
+    .phonehidtx{
+        display: none;
+        position: absolute;
+        visibility: hidden;
+    }
+    .bg_nav_left {
+        display: none;
+    }
+    .mtop{
+        margin-top: 8%;
+    }
+    .logo_new2{
+        display: block;
+        position: relative;
+        visibility: visible;
+        z-index: 10;
+    }
+    .logo_new {
+        display: none;
+        position: absolute;
+        visibility: hidden;
+        z-index: -10;
+    }
+    .setnit {
+        width: 30%;
+        z-index: 100;
+    }
+    
+
+    .img_manu {
+        margin-left: 3%;
+        z-index: 400 !important;
+        pointer-events: visible;
+        display: block !important;
+
+    }
+
+    .indexp {
+        z-index: 100 !important;
+    }
+
+    .leftbox {
+        width: 100%;
+    }
+
+
+    .poti_fix22 {
+        position: fixed;
+        z-index: 30 !important;
+    }
+
+    .poti_fix {
+        position: fixed;
+        z-index: 40 !important;
+    }
+
+    .set_mar_navbar {
+        margin-left: 0px;
+    }
+
+    .diIMG1 {
+        display: none;
+        width: 30%;
+        margin-left: 80%;
+    }
+
+    .diIMG2 {
+        display: block;
+        width: 30%;
+        margin-left: 80%;
+    }
+
+    .arrorIMG {
+        width: 30%;
+        margin-left: -100% !important;
+    }
+
+    .leftarrorIMG1 {
+        display: none;
+        width: 15%;
+
+    }
+
+    .leftarrorIMG2 {
+        display: block;
+        width: 15%;
+
+    }
+
+    .logo {
+        display: none;
+        position: absolute;
+        visibility: hidden;
+        z-index: -10;
+    }
+
+    .settop {
+        margin-bottom: 80px !important;
+    }
+
+    .marginsetlef {
+        margin-left: 20% !important;
+    }
+
+    .hednameRow {
+        background-color: green;
+    }
+
+    .mobile_cen {
+        margin-left: 55px !important;
+    }
+
+    .diIMG1 {
+        width: 20px;
+    }
+
+    .diIMG2 {
+        width: 20px;
+    }
+
+    .phone_re_set {
+        margin-left: -75px !important;
+    }
+
+    .re_phone_mini {
+        margin-left: 85px;
+    }
+
+    .mr_top_al {
+        margin-top: 3px !important;
+    }
+
+    .bb {
+        margin-top: 10px !important;
+    }
+}
+
+@media screen and (max-width: 590px) {
+    .dorpsizephone{
+        width: 50%;
+        margin-right: -10%  !important;
+    }
+}
