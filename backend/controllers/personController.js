@@ -48,7 +48,11 @@ exports.postPerson = (req, res) => {
   }
 
   exports.getPerson = (req,res)=>{
-    Person.find({}).then(data=>res.json(data))
+    try {
+      Person.find({}).then(data=>res.json(data))
+    } catch (error) {
+      res.status(400).send({error:"Something went wrong"});
+    }
   }
 
   exports.editPerson = (req,res)=>{

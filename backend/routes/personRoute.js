@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
     },
   });
   
-  router.get('/api',getPerson)
+  router.get('/person',getPerson)
   router.post("/api", upload.single("file"),postPerson);
   router.post('/data-api',editPerson)
 
