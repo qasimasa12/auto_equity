@@ -6,7 +6,7 @@ const Context = React.createContext()
 const ContextState = (props) => {
 
     const [leadsAvalible, setLeadsAvalible] = React.useState(false)
-    const [useAuth,setUseAuth] = React.useState(null)
+    const [useAuth,setUseAuth] = React.useState(false)
     const [admin,setAdmin] = React.useState(false)
 
   return (

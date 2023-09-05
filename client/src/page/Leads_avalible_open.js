@@ -6,11 +6,10 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import {Link} from "react-router-dom";
 import {Context} from "../Context/Context";
-import { useNavigate } from "react-router-dom";
 
 export default function Leads_avalible_open() {
   const {leadsAvalible, setLeadsAvalible} = React.useContext(Context);
-  const navigate = useNavigate()
+
   const [formData, setFormData] = React.useState({
     text: "",
   });
@@ -25,7 +24,7 @@ export default function Leads_avalible_open() {
 
   const sendMail = async () => {
     try {
-      await fetch("http://16.171.38.251/api/mail-api", {
+      await fetch("http://16.171.32.21/api/mail-api", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +54,7 @@ export default function Leads_avalible_open() {
 
   const sendDealSuccess = async () => {
     try {
-      const response = await fetch("http://16.171.38.251/api/success-api", {
+      const response = await fetch("http://16.171.32.21/api/success-api", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,7 +64,6 @@ export default function Leads_avalible_open() {
 
       if (response.ok) {
         // Handle success response here
-        navigate('/Leads_success')
       } else {
         throw new Error("Error occurred while sending deal success");
       }
@@ -75,9 +73,9 @@ export default function Leads_avalible_open() {
     }
   };
 
-  const sendDealRejected = async () => {
+  const sendDealSuccess2 = async () => {
     try {
-      const response = await fetch("http://16.171.38.251/api/rejected-api", {
+      const response = fetch("http://16.171.32.21/api/rejected-api", {
         method: "Post",
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +84,6 @@ export default function Leads_avalible_open() {
       });
       if (response.ok) {
         // Handle success response here
-        navigate('/Leads_reject')
       } else {
         throw new Error("Error occurred while sending deal success");
       }
@@ -387,7 +384,7 @@ export default function Leads_avalible_open() {
             <div className="mt-4 row tableBox">
               <div>
                 <div className="row ms-3 me-3">
-                <Link to="/Stock_open">
+                  <Link to="/Stock_open">
                     <Table bordered hover>
                       <thead>
                         <tr>
@@ -412,16 +409,13 @@ export default function Leads_avalible_open() {
                                 className='ms-3' // prettier-ignore
                                 type="checkbox"
                                 id={table_Avalible_op.id}
-                                onClick={(event) => {
-                                  event.stopPropagation();
-                                }}
                               />
                             </td>
                           </tr>
                         ))}
                       </tbody>
                     </Table>
-                    </Link>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -443,6 +437,11 @@ export default function Leads_avalible_open() {
               value={formData.text}
               placeholder="      Type here....."
             ></textarea>
+            <div className="justify-end mt-3 mb-3 row d-flex me-3">
+              <div className="add_btn">
+                <h5 className="tx_white">Add</h5>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -458,7 +457,7 @@ export default function Leads_avalible_open() {
         </div>
         <div className="mt-5 mb-5 all_center row">
           <div
-            onClick={sendDealRejected}
+            onClick={sendDealSuccess2}
             className="justify-end mt-3 col-6 d-flex"
           >
             <div className="all_center btn_deal2">

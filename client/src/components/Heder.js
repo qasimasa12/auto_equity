@@ -4,16 +4,26 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Context } from "../Context/Context";
+import { useState } from "react";
 // import { FaBeer } from "@react-icons/all-files/fa/FaBeer";
 // import { RxDashboard } from 'react-icons/fa';
 
 export default function Heder() {
+
+  const [userName , setUserName ] = useState();
+
+  useEffect(()=>{
+    const user = localStorage.getItem('user');
+    const jsonUser = JSON.parse(user);
+    setUserName(jsonUser?.userName);
+  },[])
+  
   const profiledetile = {
     logoUrl: "./images/homelogo.png",
     imgUrl: "./images/profile.png",
     name: "Shan danushka",
   };
-  const {setUseAuth,useAuth,setAdmin} = useContext(Context)
+  const {setUseAuth,setAdmin} = useContext(Context)
 
   const hover_d1 = document.getElementsByClassName("hover_d1");
   const hover_d2 = document.getElementsByClassName("hover_d2");
@@ -338,14 +348,14 @@ export default function Heder() {
   };
 
   const logout = () => {
-    // alert("log out");
-    window.localStorage.clear();
-    setAdmin(false)
+    alert("log out");
     navigate("/");
-    // window.location.href = "/";
-    // sessionStorage.setItem("login", false);
+    window.localStorage.clear();
+    setUseAuth(false)
+    setAdmin(false)
+    window.location.href = "/";
+    sessionStorage.setItem("login", false);
   };
-
 
   return (
     <div className="row set_mar_navbar">
@@ -757,12 +767,12 @@ export default function Heder() {
                   alt=""
                 />
                 <p className="phonehidtx">
-                {profiledetile.name}
+                {userName}
                 </p>
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={()=>navigate('/Setting_profile')}>My Account</Dropdown.Item>
+                <Dropdown.Item>My Account</Dropdown.Item>
                 <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

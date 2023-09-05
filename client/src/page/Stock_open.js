@@ -475,7 +475,6 @@ export default function Stock_open() {
                       thumbnails={true}
                       thumbnailWidth="50px"
                       style={{
-                        
                         textAlign: "center",
                         // maxWidth: "850px",
                         // maxHeight: "500px",

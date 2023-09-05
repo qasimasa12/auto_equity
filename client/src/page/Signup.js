@@ -1,35 +1,25 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import { Context } from '../Context/Context';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { toast } from 'react-toastify';
-import Loader from '../components/Loader';
+import axios from 'axios';
+import Loader from './../components/Loader'
 
-export default function Login() {
+
+export default function Signup() {
 
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const { setUseAuth } = useContext(Context)
-
-    useEffect(() => {
-        var login = sessionStorage.getItem("login");
-
-        if (login === true) {
-            alert("automatic login!");
-            sessionStorage.setItem("pageView", "Dashboard");
-            navigate("/Dashboard");
-        }
-        else {
-            sessionStorage.setItem("pageView", "");
-            navigate("/");
-        }
-    }, [])
 
     const validationSchema = Yup.object().shape({
+        userName: Yup.string().required('Username is required'),
         email: Yup.string().email('Invalid email').required('Email is required'),
         password: Yup.string().required('Password is required'),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Passwords must match')
+            .required('Confirm Password is required'),
     });
 
     const formik = useFormik({
@@ -42,58 +32,41 @@ export default function Login() {
         validationSchema: validationSchema,
         onSubmit: (values) => {
             // Handle form submission here
+            console.log(values);
             handleSubmit(values);
         },
     });
 
 
-    function handleSubmit(values) {
-        setIsLoading(true);
-
+    async function handleSubmit(values) {
+        setIsLoading(true)
+        const data = {
+            email: values.email,
+            Password: values.password,
+            Role: "user",
+            username: values.userName,
+        }
         try {
-            const { email, password } = values;
-            fetch(`${process.env.REACT_APP_API_URL}/api/login-user`, {
-                method: "POST",
-                crossDomain: true,
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                    "Access-Control-Allow-Origin": "*",
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    setIsLoading(false);
-                    if (data.status === "ok") {
-                        window.localStorage.setItem("token", data.data);
-                        window.localStorage.setItem("user", JSON.stringify(data?.user));
-                        window.localStorage.setItem("loggedIn", true);
-                        setUseAuth(true);
-                        toast.success("Login Successfully", {
-                            position: "top-right",
-                            autoClose: 2000,
-                        });
-                        navigate("/Dashboard");
-                    } else {
-                        toast.error(data.error, {
-                            position: "top-right",
-                            autoClose: 2000,
-                        });
-                    }
+            const newUser = await axios.post(`${process.env.REACT_APP_API_URL}/api/add-user`, data);
+            if (newUser) {
+                setIsLoading(false)
+                console.log("New User == ", newUser);
+                toast.success("Signup Successfully", {
+                    position: "top-right",
+                    autoClose: 2000,
                 });
+                navigate('/')
+            }
 
         } catch (error) {
-            setIsLoading(false);
-            console.log("Login Erroreeee == ", error);
-            toast.error("Login Failed", {
+            setIsLoading(false)
+            console.log("error == ", error?.response?.data?.error)
+            toast.error(error?.response?.data?.error, {
                 position: "top-right",
                 autoClose: 2000,
             });
         }
+        setIsLoading(false)
     }
 
 
@@ -118,15 +91,37 @@ export default function Login() {
                                 </div>
                                 <div className='justify-center mt-4 mb-4 row d-flex'>
                                     <div className='justify-center col-12 d-flex'>
-                                        <h2 className='font_bold'>Log In</h2>
+                                        <h2 className='font_bold'>Register New Account</h2>
                                     </div>
                                 </div>
                                 <div className='justify-center mt-4 mb-4 row d-flex'>
+
                                     <form onSubmit={formik.handleSubmit}>
                                         <div className='justify-center row d-flex'>
                                             <div className="col-9 mt-4 ms-3">
                                                 <div className="textOnInput">
-                                                    <label htmlFor="inputText">Email</label>
+                                                    <label htmlFor="username">Username</label>
+                                                    <input
+                                                        id='userName'
+                                                        className="form-control"
+                                                        name="userName"
+                                                        type="text"
+                                                        autoComplete="userName"
+                                                        value={formik.values.userName}
+                                                        onChange={formik.handleChange}
+                                                        onBlur={formik.handleBlur}
+                                                    />
+                                                    {formik.touched.userName && formik.errors.userName ? (
+                                                        <div style={{ color: "red" }}>{formik.errors.userName}</div>
+                                                    ) : null}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className='justify-center row d-flex'>
+                                            <div className="col-9 mt-4 ms-3">
+                                                <div className="textOnInput">
+                                                    <label htmlFor="Email">Email</label>
                                                     <input
                                                         id='Email'
                                                         className="form-control"
@@ -143,10 +138,11 @@ export default function Login() {
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div className='justify-center row d-flex'>
-                                            <div class="col-9 mt-4 ms-3">
-                                                <div class="textOnInput">
-                                                    <label for="inputText">Password</label>
+                                            <div className="col-9 mt-4 ms-3">
+                                                <div className="textOnInput">
+                                                    <label htmlFor="Email">Password</label>
                                                     <input
                                                         id='password'
                                                         className="form-control"
@@ -163,19 +159,37 @@ export default function Login() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className='justify-end row d-flex me-5'>
-                                            <div class="col-12 mt-1 d-flex justify-end me-5">
-                                                <h2 className='font_bold'>Forgot password?</h2>
+
+                                        <div className='justify-center row d-flex'>
+                                            <div className="col-9 mt-4 ms-3">
+                                                <div className="textOnInput">
+                                                    <label htmlFor="Email">Confirm Password</label>
+                                                    <input
+                                                        id='confirmPassword'
+                                                        className="form-control"
+                                                        name="confirmPassword"
+                                                        type="password"
+                                                        autoComplete="confirmPassword"
+                                                        value={formik.values.confirmPassword}
+                                                        onChange={formik.handleChange}
+                                                        onBlur={formik.handleBlur}
+                                                    />
+                                                    {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+                                                        <p style={{ color: "red" }}>{formik.errors.confirmPassword}</p>
+                                                    ) : null}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* Repeat similar pattern for password and confirmPassword */}
+                                        {/* ... */}
+                                        <div className='justify-end mt-4 row d-flex'>
+                                            <div className="col-12 mt-1 d-flex justify-center">
+                                                <div onClick={formik.handleSubmit} className='boxBtn_login all_center'>
+                                                    <h2 className='font_white'>Signup</h2>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
-                                    <div className='justify-end mt-4 row d-flex'>
-                                        <div class="col-12 mt-1 d-flex justify-center">
-                                            <div onClick={formik.handleSubmit} className='boxBtn_login all_center'>
-                                                <button type='submit' className='font_white'>Login</button>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div className='justify-end mt-4 row d-flex'>
                                         <div class="col-6 mt-1 d-flex justify-end">
@@ -188,10 +202,9 @@ export default function Login() {
 
                                     <div className='justify-end mt-4 row d-flex'>
                                         <div class="col-12 mt-1 d-flex justify-center">
-                                            <h2 className='underline' onClick={() => { navigate('signup') }}>Don’t have an account? Register here</h2>
+                                            <h2 className='underline' onClick={() => { navigate('/') }}>Already have an account? Login here</h2>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

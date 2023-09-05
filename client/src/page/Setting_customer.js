@@ -1,6 +1,6 @@
 import "../components/Heder.css";
 import "./Setting_customer.css";
-import React, {useEffect, useState,useRef} from "react";
+import React, {useEffect, useState} from "react";
 import Heder from "../components/Heder";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
@@ -30,11 +30,7 @@ function myFunction() {
 }
 
 export default function Setting_customer() {
-  const ref = useRef();
 
-  const reset = () => {
-    ref.current.value = "";
-  };
   const [modalOpen, setModalOpen] = useState(false);
 
   const [rowToEdit, setRowToEdit] = useState(null);
@@ -63,7 +59,7 @@ export default function Setting_customer() {
   const handleMongoSubmit = () => {
     const formData = new FormData();
     formData.append('file', file);
-    fetch('http://16.171.38.251/api/api', {
+    fetch('http://16.171.32.21/api/api', {
       method: 'POST',
       body: formData,
     })
@@ -85,7 +81,7 @@ export default function Setting_customer() {
   useEffect(()=>{
     async function fetchData() {
       try {
-        const response = await fetch('http://16.171.38.251/api/api');
+        const response = await fetch('http://16.171.32.21/api/api');
         if (response.ok) {
           const data = await response.json();
           console.log(data);
@@ -103,7 +99,7 @@ export default function Setting_customer() {
   },[addStocks])
 
   useEffect(()=>{
-    fetch('http://16.171.38.251/api/data-api', {
+    fetch('http://16.171.32.21/api/data-api', {
       method: 'Post',
       headers:{
         'Content-Type':'application/json'
@@ -331,7 +327,6 @@ export default function Setting_customer() {
   };
   const add_stock = async() => {
      handleMongoSubmit();
-     reset()
    };
   const [showModal, setShowModal] = useState(false);
   const chane_detail = () => {
@@ -401,7 +396,7 @@ export default function Setting_customer() {
                     </div>
                   </div>
                   <div className=" poti_ab ms-5" >
-                    <input className="mt-1 ms-4" type="file" id="file" ref={ref} name="file" onChange={(e) => setFile(e.target.files[0])}/>
+                    <input className="mt-1 ms-4" type="file" id="file" name="file" onChange={(e) => setFile(e.target.files[0])}/>
                   </div>
                 </label>
 

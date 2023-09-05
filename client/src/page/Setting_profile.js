@@ -96,7 +96,7 @@ export default function Setting_profile() {
   React.useEffect(()=>{
     async function fetchData() {
       try {
-        const response = await fetch('http://16.171.38.251/api/user-details');
+        const response = await fetch('http://16.171.32.21/api/user-details');
         if (response.ok) {
           const data = await response.json();
           // console.log(data);
@@ -120,7 +120,7 @@ export default function Setting_profile() {
   const handleDeleteRow = (targetIndex) => {
     setProfile_detail(profile_detail.filter((_, idx) => idx !== targetIndex));
     console.log(profile_detail.filter((_, idx) => idx === targetIndex))
-    fetch('http://16.171.38.251/api/delete-user', {
+    fetch('http://16.171.32.21/api/delete-user', {
       method: 'Post',
       headers:{
         'Content-Type':'application/json'
@@ -132,7 +132,7 @@ export default function Setting_profile() {
   };
   
   React.useEffect(()=>{
-    fetch('http://16.171.38.251/api/update-user', {
+    fetch('http://16.171.32.21/api/update-user', {
       method: 'Post',
       headers:{
         'Content-Type':'application/json'
@@ -159,7 +159,7 @@ export default function Setting_profile() {
   const add_box = () => {
     if (insertedformData.Password === insertedformData.confirmPassword) {
       if(insertedformData.Role.toLowerCase() === 'user' || insertedformData.Role.toLowerCase() === 'admin'){
-        fetch("http://16.171.38.251/api/add-user", {
+        fetch("http://16.171.32.21/api/add-user", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

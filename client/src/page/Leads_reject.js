@@ -28,21 +28,17 @@ function myFunction() {
 
 export default function Leads_reject() {
 
-    const [selects,setSelects] = React.useState("Select Month")
-    const [fetchTableData,setFetchTableData] = React.useState([])
-    const [price,setPrice] = React.useState("Price Range")
-    const [search, setSearch] = React.useState([]);
-    const [Leads_reject, setLeads_reject] = React.useState([]);
+
+    const [rejectedData, setrejectedData] = React.useState({})
 
     React.useEffect(()=>{
         async function fetchData() {
           try {
-            const response = await fetch('http://16.171.38.251/api/rejected-api');
+            const response = await fetch('http://16.171.32.21/api/rejected-api');
             if (response.ok) {
               const data = await response.json();
               console.log(data);
               setLeads_reject(data)
-              setFetchTableData(data)
               // Handle the data here
             } else {
               throw new Error('Error occurred while fetching data');
@@ -55,63 +51,8 @@ export default function Leads_reject() {
         fetchData();
       },[])
 
-      const handleChangeDate = (e)=>{
-        setSelects(e.target.value);
-
-      }
-      const handleChangePrice = (e)=>{
-
-        setPrice(e.target.value);
-      }
-
-      React.useEffect(() => {
-        if(selects !== "Select Month" && price !== "Price Range" ){
-          const filteredTable = fetchTableData.filter((e) => {
-            const [minRange, maxRange] = price.split('-').map(Number);
-            const dateStr = e.DateofAgreement;
-            const date = new Date(dateStr);
-            const monthName = date.toLocaleString('default', { month: 'long' });
-            return monthName === selects && e.SalePrice >= minRange && e.SalePrice <= maxRange;
-          });
-          setLeads_reject(filteredTable);
-        setSearch(filteredTable)
-        }else if(price !== "Price Range"){
-            const filteredTable = fetchTableData.filter((e) => {
-                const [minRange, maxRange] = price.split('-').map(Number);
-                return e.SalePrice >= minRange && e.SalePrice <= maxRange;
-            });
-            setLeads_reject(filteredTable);
-            setSearch(filteredTable)
-        }else if(selects !== "Select Month"){
-            const filteredTable = fetchTableData.filter((e) => {
-                const dateStr = e.DateofAgreement;
-                const date = new Date(dateStr);
-                const monthName = date.toLocaleString('default', { month: 'long' });
-                return monthName === selects;
-              });
-              setLeads_reject(filteredTable);
-            setSearch(filteredTable)
-        }else{
-            setLeads_reject(fetchTableData);
-            setSearch(fetchTableData)
-        }
-    }, [selects,price,fetchTableData]);
-
-      const handleSearch = (event) => {
-        const value = event.target.value;
-        const results = search.filter(obj => {
-          return Object.values(obj).some(prop => {
-            if (typeof prop === 'number') {
-              return prop === Number(value);
-            } else if (typeof prop === 'string') {
-              return prop.toLowerCase().includes(value.toLowerCase());
-            }
-            return false;
-          });
-        });
-        setLeads_reject(results);
-};
-
+    const [search, setSearch] = React.useState('');
+    const [Leads_reject, setLeads_reject] = React.useState([]);
 
     const handleSelect = (data, id) => {
 
@@ -232,42 +173,27 @@ export default function Leads_reject() {
     ];
     const month_list = [
         {
-          name: "January",
+            name: "January"
         },
         {
-          name: "February	",
+            name: "February	"
         },
         {
-          name: "March",
+            name: "March"
         },
         {
-          name: "April",
+            name: "April"
         },
         {
-          name: "May",
+            name: "May"
         },
         {
-          name: "June",
+            name: "June"
         },
         {
-          name: "July",
+            name: "July"
         },
-        {
-          name: "August",
-        },
-        {
-          name: "September",
-        },
-        {
-          name: "October",
-        },
-        {
-          name: "November",
-        },
-        {
-          name: "December",
-        },
-      ];
+    ];
     const price_range = [
         {
             name: "10000-20000"
@@ -283,27 +209,30 @@ export default function Leads_reject() {
         },
     ];
 
-    // const handleSearch = (event) => {
+    const handleSearch = (event) => {
 
-    //     setSearch(event.target.value);
-    //     if (search !== "") {
-    //         myFunction();
-    //     }
-    //     else{
-    //         setLeads_reject(defult_Leads_reject);
-    //     }
-    // };
+        setSearch(event.target.value);
+        if (search !== "") {
+            myFunction();
+        }
+        else{
+            setLeads_reject(defult_Leads_reject);
+        }
 
-    // const serach_Table = () => {
 
-    //     const data = {
-    //         nodes: defult_Leads_reject.filter((item) =>
-    //             item.id.toLowerCase().includes(search.toLowerCase())
-    //         ),
-    //     };
 
-    //     setLeads_reject(data.nodes);
-    // };
+    };
+
+    const serach_Table = () => {
+
+        const data = {
+            nodes: defult_Leads_reject.filter((item) =>
+                item.id.toLowerCase().includes(search.toLowerCase())
+            ),
+        };
+
+        setLeads_reject(data.nodes);
+    };
 
     // React.useEffect(() => {
     //     setLeads_reject(defult_Leads_reject);
@@ -324,7 +253,7 @@ export default function Leads_reject() {
                                 <input id="myInput" className='inputSearch' type="text" onChange={handleSearch} placeholder=' Search here' />
                             </div>
                             <div className='mt-2 col-2 alignCenter'>
-                                <img src="./images/search.png" alt="" />
+                                <img onClick={serach_Table} src="./images/search.png" alt="" />
                             </div>
                         </div>
                     </div>
@@ -375,7 +304,7 @@ export default function Leads_reject() {
                             </div>
                             <div className='col-12 col-md-3 rowell'>
                                 <h6 className="tx_bold">Month</h6>
-                                <Form.Select onChange={(e)=>handleChangeDate(e)} aria-label="Default select example" className='size_select fondsixw ms-2'>
+                                <Form.Select aria-label="Default select example" className='size_select fondsixw ms-2'>
                                     <option>Select Month</option>
                                     {month_list.map((month_list) => (
                                         <option value={month_list.name}>{month_list.name}</option>
@@ -385,7 +314,7 @@ export default function Leads_reject() {
                             </div>
                             <div className='col-12 col-md-3 rowell'>
                                 <h6 className="tx_bold">Price_Range</h6>
-                                <Form.Select onChange={(e)=>handleChangePrice(e)} aria-label="Default select example" className='size_select fondsixw ms-2'>
+                                <Form.Select aria-label="Default select example" className='size_select fondsixw ms-2'>
                                     <option>Price Range</option>
                                     {price_range.map((price_range) => (
                                         <option value={price_range.name}>{price_range.name}</option>

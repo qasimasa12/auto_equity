@@ -9,11 +9,6 @@ import  ModalFn  from "../components/StocksModal";
 
 
 export default function Setting_stock() {
-  const ref = React.useRef();
-
-  const reset = () => {
-    ref.current.value = "";
-  };
 
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -54,7 +49,7 @@ export default function Setting_stock() {
 
     if(insertedformData.firstcolumn.trim().length>0){
 
-    fetch('http://16.171.38.251/api/stocks-api', {
+    fetch('http://16.171.32.21/api/stocks-api', {
       method: 'POST',
       headers:{
         'Content-Type':'application/json'
@@ -70,7 +65,7 @@ export default function Setting_stock() {
     }else{
       const formData = new FormData();
       formData.append('file', file);
-      fetch('http://16.171.38.251/api/stocks-api', {
+      fetch('http://16.171.32.21/api/stocks-api', {
         method: 'POST',
         body: formData,
       })
@@ -86,7 +81,7 @@ export default function Setting_stock() {
   React.useEffect(()=>{
     async function fetchData() {
       try {
-        const response = await fetch('http://16.171.38.251/api/stocks-api');
+        const response = await fetch('http://16.171.32.21/api/stocks-api');
         if (response.ok) {
           const data = await response.json();
           console.log(data);
@@ -104,7 +99,7 @@ export default function Setting_stock() {
   },[addStocks])
 
   React.useEffect(()=>{
-    fetch('http://16.171.38.251/api/update-stocks-api', {
+    fetch('http://16.171.32.21/api/update-stocks-api', {
       method: 'Post',
       headers:{
         'Content-Type':'application/json'
@@ -206,7 +201,6 @@ export default function Setting_stock() {
   };
   const add_stock = () => {
     handleMongoSubmit()
-    reset()
   };
 
   const chane_detail = () => { };
@@ -240,7 +234,7 @@ export default function Setting_stock() {
                     </div>
                   </div>
                   <div className=" poti_ab ms-5" >
-                    <input className="mt-1 ms-4" type="file" id="file" ref={ref} name="file" onChange={(e) => setFile(e.target.files[0])}/>
+                    <input className="mt-1 ms-4" type="file" id="file" name="file" onChange={(e) => setFile(e.target.files[0])}/>
                   </div>
                 </label>
 

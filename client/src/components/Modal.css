@@ -49,3 +49,29 @@
   border-radius: 0.3rem !important;
   margin-bottom: 1rem !important;
 }
+
+
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  background-color: rgba(189, 189, 189, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backdrop .loader {
+  /* background-image: url(./../../public/images/car-vector.jpg); */
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.backdrop .loader svg {
+  width: 65px;
+  height: 65px;
+}

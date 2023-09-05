@@ -72,6 +72,7 @@ label {
     height: 40px;
     background: #6B7B8C;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .font_white {

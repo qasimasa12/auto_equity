@@ -11,116 +11,29 @@ import { Link } from "react-router-dom";
 import Leads_avalible from "./Leads_avalible";
 import Leads_reject from "./Leads_reject";
 import Leads_success from "./Leads_success";
-import { Context } from "../Context/Context";
 
-// function myFunction() {
-//   var input, filter, table, tr, td, i;
-//   input = document.getElementById("myInput");
-//   filter = input.value.toUpperCase();
-//   table = document.getElementById("myTable");
-//   tr = table.getElementsByTagName("tr");
-//   for (i = 0; i < tr.length; i++) {
-//     td = tr[i].getElementsByTagName("td")[0];
-//     if (td) {
-//       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//         tr[i].style.display = "";
-//       } else {
-//         tr[i].style.display = "none";
-//       }
-//     }
-//   }
-// }
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
 
 export default function Leads() {
   const [table_Avalible, settable_Avalible] = React.useState([]);
-  const [selects,setSelects] = React.useState("Select Month")
-  const [fetchTableData,setFetchTableData] = React.useState([])
-  const [price,setPrice] = React.useState("Price Range")
-  const [search, setSearch] = React.useState([]);
-  const {leadsAvalible,setLeadsAvalible} = React.useContext(Context);
-
-  React.useEffect(()=>{
-    async function fetchData() {
-        try {
-          const response = await fetch('http://16.171.38.251/api/available-leads-api');
-          if (response.ok) {
-            const data = await response.json();
-            settable_Avalible(data);
-            setFetchTableData(data)
-            // Handle the data here
-          } else {
-            throw new Error('Error occurred while fetching data');
-          }
-        } catch (error) {
-          console.error(error);
-          // Handle the error here
-        }
-      }
-      fetchData();
-    },[])
-
-    React.useEffect(() => {
-      if(selects !== "Select Month" && price !== "Price Range" ){
-        const filteredTable = fetchTableData.filter((e) => {
-          const [minRange, maxRange] = price.split('-').map(Number);
-          const dateStr = e.DateofAgreement;
-          const date = new Date(dateStr);
-          const monthName = date.toLocaleString('default', { month: 'long' });
-          return monthName === selects && e.SalePrice >= minRange && e.SalePrice <= maxRange;
-        });
-      settable_Avalible(filteredTable);
-      setSearch(filteredTable)
-      }else if(price !== "Price Range"){
-          const filteredTable = fetchTableData.filter((e) => {
-              const [minRange, maxRange] = price.split('-').map(Number);
-              return e.SalePrice >= minRange && e.SalePrice <= maxRange;
-          });
-          settable_Avalible(filteredTable);
-          setSearch(filteredTable)
-      }else if(selects !== "Select Month"){
-          const filteredTable = fetchTableData.filter((e) => {
-              const dateStr = e.DateofAgreement;
-              const date = new Date(dateStr);
-              const monthName = date.toLocaleString('default', { month: 'long' });
-              return monthName === selects;
-            });
-          settable_Avalible(filteredTable);
-          setSearch(filteredTable)
-      }else{
-          settable_Avalible(fetchTableData);
-          setSearch(fetchTableData)
-      }
-  }, [selects,price,fetchTableData]);
-
-  const handleChangeDate = (e)=>{
-    setSelects(e.target.value);
-
-  }
-  const handleChangePrice = (e)=>{
-
-    setPrice(e.target.value);
-  }
-
-  const handleSearch = (event) => {
-    const value = event.target.value;
-    const results = search.filter(obj => {
-      return Object.values(obj).some(prop => {
-        if (typeof prop === 'number') {
-          return prop === Number(value);
-        } else if (typeof prop === 'string') {
-          return prop.toLowerCase().includes(value.toLowerCase());
-        }
-        return false;
-      });
-    });
-    settable_Avalible(results);
-};
 
 
-    function handleClick (ix){
-        setLeadsAvalible(table_Avalible[ix])
-        console.log(leadsAvalible)
-    }
 
   const filter = [
     {
@@ -240,21 +153,6 @@ export default function Leads() {
     {
       name: "July",
     },
-    {
-      name: "August",
-    },
-    {
-      name: "September",
-    },
-    {
-      name: "October",
-    },
-    {
-      name: "November",
-    },
-    {
-      name: "December",
-    },
   ];
   const price_range = [
     {
@@ -271,28 +169,28 @@ export default function Leads() {
     },
   ];
 
-  // const handleSearch_a = (event) => {
-  //   setSearch(event.target.value);
-  //   if (search !== "") {
-  //     myFunction();
-  //   } else {
-  //     settable_Avalible(defult_table_Avalible);
-  //   }
-  // };
+  const handleSearch_a = (event) => {
+    setSearch(event.target.value);
+    if (search !== "") {
+      myFunction();
+    } else {
+      settable_Avalible(defult_table_Avalible);
+    }
+  };
 
-  // const serach_Table_a = () => {
-  //   const data = {
-  //     nodes: defult_table_Avalible.filter((item) =>
-  //       item.id.toLowerCase().includes(search.toLowerCase())
-  //     ),
-  //   };
+  const serach_Table_a = () => {
+    const data = {
+      nodes: defult_table_Avalible.filter((item) =>
+        item.id.toLowerCase().includes(search.toLowerCase())
+      ),
+    };
 
-  //   settable_Avalible(data.nodes);
-  // };
+    settable_Avalible(data.nodes);
+  };
 
-  // React.useEffect(() => {
-  //   // settable_Avalible(defult_table_Avalible);
-  // }, []);
+  React.useEffect(() => {
+    settable_Avalible(defult_table_Avalible);
+  }, []);
 
   const [Leads_reject, setLeads_reject] = React.useState([]);
 
@@ -355,21 +253,30 @@ export default function Leads() {
   ];
 
 
-  // const handleSearch_r = (event) => {
-  //   setSearch(event.target.value);
-  //   if (search !== "") {
-  //     myFunction();
-  //   } else {
-  //     setLeads_reject(defult_Leads_reject);
-  //   }
-  // };
+  const handleSearch_r = (event) => {
+    setSearch(event.target.value);
+    if (search !== "") {
+      myFunction();
+    } else {
+      setLeads_reject(defult_Leads_reject);
+    }
+  };
 
+  const serach_Table_r = () => {
+    const data = {
+      nodes: defult_Leads_reject.filter((item) =>
+        item.id.toLowerCase().includes(search.toLowerCase())
+      ),
+    };
+
+    setLeads_reject(data.nodes);
+  };
 
   React.useEffect(() => {
     setLeads_reject(defult_Leads_reject);
   }, []);
 
-
+  const [search, setSearch] = React.useState("");
   const [table_success, settable_success] = React.useState([]);
   // const [checked, setChecked] = React.useState(true);
 
@@ -449,24 +356,24 @@ export default function Leads() {
   ];
  
   
-  // const handleSearch_s = (event) => {
-  //   setSearch(event.target.value);
-  //   if (search !== "") {
-  //     myFunction();
-  //   } else {
-  //     settable_success(defult_table_success);
-  //   }
-  // };
+  const handleSearch_s = (event) => {
+    setSearch(event.target.value);
+    if (search !== "") {
+      myFunction();
+    } else {
+      settable_success(defult_table_success);
+    }
+  };
 
-  // const serach_Table_s = () => {
-  //   const data = {
-  //     nodes: defult_table_success.filter((item) =>
-  //       item.id.toLowerCase().includes(search.toLowerCase())
-  //     ),
-  //   };
+  const serach_Table_s = () => {
+    const data = {
+      nodes: defult_table_success.filter((item) =>
+        item.id.toLowerCase().includes(search.toLowerCase())
+      ),
+    };
 
-  //   settable_success(data.nodes);
-  // };
+    settable_success(data.nodes);
+  };
 
   React.useEffect(() => {
     settable_success(defult_table_success);
@@ -488,13 +395,14 @@ export default function Leads() {
                 <input
                   id="myInput"
                   className="inputSearch"
-                  onChange={handleSearch}
+                  onChange={handleSearch_a}
                   type="text"
                   placeholder=" Search here"
                 />
               </div>
               <div className="mt-2 col-2 alignCenter">
                 <img
+                  onClick={serach_Table_a}
                   src="./images/search.png"
                   alt=""
                 />
@@ -560,7 +468,6 @@ export default function Leads() {
                 <Form.Select
                   aria-label="Default select example"
                   className="size_select fondsixw ms-2"
-                  onChange={(e)=>handleChangeDate(e)}
                 >
                   <option>Select Month</option>
                   {month_list.map((month_list) => (
@@ -573,7 +480,6 @@ export default function Leads() {
                 <Form.Select
                   aria-label="Default select example"
                   className="size_select fondsixw ms-2"
-                  onChange={(e)=>handleChangePrice(e)}
                 >
                   <option>Price Range</option>
                   {price_range.map((price_range) => (
@@ -606,27 +512,27 @@ export default function Leads() {
                         </tr>
                       </thead>
                       <tbody>
-                        {table_Avalible.map((table_Avalible,idx) => (
-                          <tr onClick={()=>handleClick(idx)}>
-                            <td>{idx+1}</td>
+                        {table_Avalible.map((table_Avalible) => (
+                          <tr>
+                            <td>{table_Avalible.id}</td>
                             <td className="First_Name">
-                              {table_Avalible.FIRST_NAME}
+                              {table_Avalible.f_name}
                             </td>
                             <td className="Last_Name">
-                              {table_Avalible.LAST_NAME}
+                              {table_Avalible.L_name}
                             </td>
                             <td className="Make">{table_Avalible.Make}</td>
                             <td className="Model">{table_Avalible.Model}</td>
                             <td className="Reg_Number">
-                              {table_Avalible.Reg_Number}
+                              {table_Avalible.reg_Number}
                             </td>
                             <td className="Muleage">
                               {table_Avalible.muleage}
                             </td>
                             <td className="Colour">{table_Avalible.Colour}</td>
-                            <td className="Price(£)">{table_Avalible.SalePrice}</td>
+                            <td className="Price(£)">{table_Avalible.Price}</td>
                             <td className="Monthly_Payment">
-                              {table_Avalible.MonthlyPayment}
+                              {table_Avalible.m_payment}
                             </td>
                             <td className="Camount_of_Equity">
                               {table_Avalible.equity}
@@ -657,12 +563,12 @@ export default function Leads() {
                   id="myInput"
                   className="inputSearch"
                   type="text"
-                  // onChange={handleSearch_r}
+                  onChange={handleSearch_r}
                   placeholder=" Search here"
                 />
               </div>
               <div className="mt-2 col-2 alignCenter">
-                <img src="./images/search.png" alt="" />
+                <img onClick={serach_Table_r} src="./images/search.png" alt="" />
               </div>
             </div>
           </div>
@@ -816,11 +722,12 @@ export default function Leads() {
                   id="myInput"
                   className="inputSearch"
                   type="text"
+                  onChange={handleSearch_s}
                   placeholder=" Search here"
                 />
               </div>
               <div className="mt-2 col-2 alignCenter">
-                <img src="./images/search.png" alt="" />
+                <img onClick={serach_Table_s} src="./images/search.png" alt="" />
               </div>
             </div>
           </div>

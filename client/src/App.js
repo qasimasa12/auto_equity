@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Leads_avalible from "./page/Leads_avalible";
 import Leads_avalible_open from "./page/Leads_avalible_open";
@@ -16,17 +16,20 @@ import Setting_customer from "./page/Setting_customer";
 import Leads from "./page/Leads";
 import Login from "./page/Login";
 import ProtectedRoutes from "./components/ProtectedRoutes";
-import ForgotPassword from "./components/ForgotPassword";
-import PasswordReset from "./components/PasswordReset";
+import PrivateRoute from "./components/PrivateRoute";
+import { useEffect, useState } from "react";
+import Signup from "./page/Signup";
 
 function App() {
+  // const navigate = useNavigate();
+  const isLoggedIn = window.localStorage.getItem("loggedIn");
+  // const isLoggedIn = "true";
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={ <Login />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:id/:token" element={<PasswordReset />} />
-        <Route element={<ProtectedRoutes/>}>
+        <Route path="/" element={isLoggedIn === "true" ? <Dashboard /> : <Login />} />
+        <Route path="/signup"  element={<Signup />} />
+        <Route element={<ProtectedRoutes />}>
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Leads_avalible" element={<Leads_avalible />} />
           <Route path="/Leads_success" element={<Leads_success />} />
@@ -35,7 +38,9 @@ function App() {
           <Route path="/Report" element={<Report />} />
           <Route path="/Leads_avalible_open" element={<Leads_avalible_open />} />
           <Route path="/Stock_open" element={<Stock_open />} />
+          {/* <Route element={<PrivateRoute/>}> */}
           <Route path="/Setting_profile" element={<Setting_profile />} />
+          {/* </Route> */}
           <Route path="/Setting_link" element={<Setting_link />} />
           <Route path="/Setting_stock" element={<Setting_stock />} />
           <Route path="/Setting_customer" element={<Setting_customer />} />
